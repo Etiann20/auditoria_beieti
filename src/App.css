@@ -1256,3 +1256,18 @@ RECUPERACIÓN
   color:#2563eb;
   
   }
+
+/*==========================
+BLOCKQUOTE
+==========================*/
+
+blockquote{
+  margin: 18px 0;
+  padding: 15px 20px;
+  background: #f8fafc;
+  border-left: 5px solid #123C73;
+  border-radius: 8px;
+  font-style: italic;
+  color: #374151;
+  line-height: 1.6;
+}
