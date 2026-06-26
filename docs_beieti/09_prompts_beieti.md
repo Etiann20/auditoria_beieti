@@ -1,71 +1,69 @@
-# Bitácora de Uso de Inteligencia Artificial
+# Bitácora de Prompts IA
 
-## Herramienta utilizada
+La inteligencia artificial fue utilizada como herramienta de apoyo para la investigación, comprensión de vulnerabilidades web, estructuración de la documentación, desarrollo de la aplicación en React y generación de los borradores iniciales del informe.
 
-- ChatGPT (OpenAI)
+Por otra parte, todas las respuestas obtenidas fueron posteriormente revisadas, corregidas y adaptadas según los requerimientos de la pauta, además de complementarse con el material entregado por el docente y con investigación propia cuando fue necesario.
 
----
+## Prompt Utilizado para el Resumen de la Organización
 
-## Objetivo del uso
+> "Redacta una descripción de una municipalidad y de su portal web, indicando los servicios que ofrece y la importancia de proteger la información de los ciudadanos."
 
-La herramienta fue utilizada como apoyo para:
-
-- Comprender el funcionamiento de las vulnerabilidades web.
-- Organizar la estructura de la documentación solicitada.
-- Redactar explicaciones técnicas.
-- Proponer medidas de prevención y mitigación.
-- Apoyar el desarrollo de la aplicación en React.
+La respuesta entregó una descripción general sobre una municipalidad y los servicios que normalmente ofrece a la comunidad. Posteriormente se revisó el contenido y se adaptó manualmente al contexto de la **Municipalidad de Cerro Verde**, eliminando información innecesaria y ajustando la redacción al formato solicitado para el informe.
 
 ---
 
-## Prompts utilizados
+## Prompt Utilizado para el Análisis de SQL Injection
 
-### Prompt 1
+> "Explica qué es una vulnerabilidad SQL Injection, por qué funciona, cuál sería su impacto en una municipalidad, cómo se evalúa mediante CVSS y qué medidas de mitigación se pueden implementar."
 
-> "Explica qué es una vulnerabilidad SQL Injection, por qué funciona, cuál es su impacto y cómo prevenirla."
-
-**Resultado obtenido:**
-
-Se obtuvo una explicación técnica de la vulnerabilidad, incluyendo su funcionamiento, riesgos y recomendaciones de seguridad.
+La respuesta permitió comprender el funcionamiento de la vulnerabilidad y sirvió como base para desarrollar el informe. Posteriormente se reorganizó la información, se adaptó al contexto del portal municipal y se revisó el contenido para mantener coherencia con los conceptos vistos durante la asignatura.
 
 ---
 
-### Prompt 2
+## Prompt Utilizado para el Análisis de Cross Site Scripting (XSS)
 
-> "Explica la vulnerabilidad Cross Site Scripting (XSS), su funcionamiento, impacto y medidas de mitigación."
+> "Explica la vulnerabilidad Cross Site Scripting (XSS), indicando cómo funciona, cuál es su impacto sobre un portal web municipal y qué controles permiten prevenir este tipo de ataques."
 
-**Resultado obtenido:**
-
-Se generó una descripción de la vulnerabilidad XSS, ejemplos de explotación y controles de seguridad para prevenir este tipo de ataques.
+La inteligencia artificial entregó una explicación general sobre XSS. Luego de revisar la información, se reorganizó el contenido utilizando un lenguaje más apropiado para el informe y se complementó con conceptos estudiados en clases para mejorar la precisión de la explicación.
 
 ---
 
-### Prompt 3
+## Prompt Utilizado para el Análisis de Command Injection
 
-> "Explica la vulnerabilidad Command Injection, su funcionamiento, impacto y mecanismos de defensa."
+> "Describe la vulnerabilidad Command Injection, explica por qué ocurre, cuál sería su impacto sobre una organización pública y qué controles de seguridad ayudan a prevenirla."
 
-**Resultado obtenido:**
-
-Se obtuvo una explicación sobre la ejecución de comandos mediante entradas no validadas, junto con recomendaciones para mitigar este riesgo.
+La respuesta inicial fue utilizada como guía para comprender esta vulnerabilidad. Posteriormente se simplificó la explicación, se adaptó al escenario de la Municipalidad de Cerro Verde y se incorporaron medidas de mitigación más específicas para el contexto del proyecto.
 
 ---
 
-### Prompt 4
+## Prompt Utilizado para la Identificación de Activos y la Matriz de Riesgos
 
-> "Ayúdame a estructurar un proyecto en React para presentar una auditoría de seguridad web."
+> "Ayúdame a identificar los activos de información más importantes de una municipalidad y a construir una matriz de riesgos considerando probabilidad e impacto para las vulnerabilidades SQL Injection, XSS y Command Injection."
 
-**Resultado obtenido:**
-
-Se obtuvo una propuesta de organización del proyecto, componentes React y estructura de carpetas para cumplir con los requisitos de la evaluación.
+La IA propuso una identificación inicial de activos y una evaluación de riesgos. Posteriormente se revisó toda la información, se reorganizó por categorías y se ajustó manualmente para mantener coherencia entre la criticidad de los activos y el impacto asociado a cada vulnerabilidad.
 
 ---
 
-## Validación de la información
+## Prompt Utilizado para Controles de Seguridad y Plan de Recuperación
 
-Toda la información generada fue revisada y adaptada al contexto de la **Municipalidad de Cerro Verde** y a los requerimientos establecidos por la pauta de evaluación. Además, se consideró el material entregado por el docente para mantener coherencia con los contenidos del curso.
+> "Propón controles de seguridad y un plan de recuperación ante incidentes para una municipalidad que administra un portal web con información de ciudadanos."
+
+La respuesta sirvió como base para estructurar ambas secciones del informe. Posteriormente se reorganizaron los controles por categorías, se eliminaron recomendaciones repetidas y se adaptó el plan de recuperación siguiendo un flujo lógico de respuesta ante incidentes.
 
 ---
 
-## Conclusión
+## Prompt Utilizado para el Diseño y Mejoras Visuales de la Aplicación Web
 
-La inteligencia artificial fue utilizada como una herramienta de apoyo para acelerar la investigación, la redacción y la organización del proyecto. Sin embargo, el contenido fue revisado, adaptado y validado antes de incorporarlo al informe final.
+> "Quiero mejorar visualmente mi aplicación desarrollada con React y Vite para que tenga una apariencia moderna y profesional. Necesito una portada tipo landing page, una barra de navegación fija, tarjetas para presentar la información, un dashboard con estadísticas, una matriz de riesgos visual, un botón para volver al inicio, animaciones suaves y un diseño responsive relacionado con ciberseguridad."
+
+El resultado de este prompt fue gran parte del diseño final utilizado en la aplicación web. En un comienzo las propuestas no coincidían completamente con la idea que se buscaba, por lo que fue necesario realizar distintos ajustes, modificar colores, reorganizar componentes y adaptar el diseño hasta obtener el resultado final presentado en el proyecto.
+
+# Reflexión Uso de IA
+
+La inteligencia artificial fue utilizada principalmente como una herramienta de apoyo para acelerar la búsqueda de información, organizar ideas, comprender conceptos técnicos y generar los borradores iniciales del informe.
+
+Aun así, todas las respuestas fueron revisadas antes de incorporarlas al trabajo, corrigiendo posibles errores, eliminando información repetitiva y adaptando el contenido al contexto de la auditoría realizada para la Municipalidad de Cerro Verde y a los requerimientos establecidos por la pauta de evaluación.
+
+Durante el desarrollo del proyecto fue necesario complementar varias respuestas con investigación propia y con el material entregado por el docente, ya que en algunos casos la información entregada por la IA era demasiado general o no se ajustaba completamente al contexto solicitado.
+
+En conclusión, la inteligencia artificial demostró ser una herramienta muy útil para apoyar la investigación, comprender conceptos y agilizar el desarrollo del proyecto. Sin embargo, su utilización requiere siempre un análisis crítico por parte del estudiante, ya que las respuestas pueden contener información incompleta, errores de contexto o explicaciones demasiado generales. Por este motivo, se considera una herramienta de apoyo al aprendizaje y al desarrollo del informe, pero no un reemplazo del análisis y criterio personal necesario para elaborar un trabajo académico.
