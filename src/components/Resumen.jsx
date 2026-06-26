@@ -1,12 +1,11 @@
 function Resumen() {
     return (
-      <section id="resumen">
-        <h2>Municipalidad de Cerro Verde</h2>
+      <section id="resumen" className="card">
+        <h2>Resumen</h2>
   
         <p>
-          Gobierno local encargado de administrar servicios municipales,
-          atención ciudadana y gestión de trámites para los habitantes
-          de la comuna.
+          Aquí se mostrará el resumen de la auditoría realizada para la
+          Municipalidad de Cerro Verde.
         </p>
       </section>
     );
