@@ -11,8 +11,7 @@ function Resumen() {
         administrar los recursos comunales y prestar servicios públicos a
         los habitantes de la comuna. Entre sus principales funciones se
         encuentran la gestión de permisos municipales, mantenimiento de
-        espacios públicos, administración de patentes comerciales,
-        atención ciudadana y ejecución de programas sociales.
+        espacios públicos, atención ciudadana y ejecución de programas sociales.
       </p>
 
       <p>

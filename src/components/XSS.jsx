@@ -2,58 +2,118 @@ function XSS() {
   return (
     <section id="xss" className="card">
 
-      <h2>Cross Site Scripting (Reflected XSS)</h2>
+      <h2>Reflected XSS</h2>
+
+      <h3>¿Qué es Reflected XSS?</h3>
 
       <p>
-        Cross Site Scripting (XSS) es una vulnerabilidad que permite ejecutar
-        código JavaScript dentro del navegador de otro usuario cuando la
-        aplicación no valida correctamente la información ingresada.
+        Reflected Cross Site Scripting (XSS) es una vulnerabilidad que ocurre
+        cuando una aplicación devuelve información ingresada por el usuario
+        sin validarla ni codificarla correctamente antes de mostrarla en el
+        navegador.
       </p>
 
       <p>
-        Durante la auditoría realizada se comprobó que era posible ejecutar
-        código JavaScript utilizando un payload sencillo, demostrando que la
-        aplicación era vulnerable a Reflected XSS.
+        Cuando esto sucede, un atacante puede inyectar código JavaScript que
+        será ejecutado por el navegador de la víctima, permitiendo mostrar
+        contenido falso, robar información de sesión o redirigir al usuario
+        hacia sitios maliciosos.
       </p>
 
-      <h3>Evidencia del laboratorio</h3>
+      <p>
+        En un portal como el de la Municipalidad de Cerro Verde, una
+        vulnerabilidad de este tipo podría afectar tanto a ciudadanos como a
+        funcionarios municipales que utilicen el sistema.
+      </p>
+
+      <h3>Evidencia</h3>
+
+      <p>
+        La prueba fue realizada utilizando DVWA configurado con el nivel de
+        seguridad <strong>Low</strong>.
+      </p>
+
+      <p>
+        Para comprobar la vulnerabilidad se utilizó el siguiente payload:
+      </p>
+
+      <pre>
+        <code>
+{"<script>alert('XSS')</script>"}
+        </code>
+      </pre>
+
+      <p>
+        Después de enviar el payload, la aplicación devolvió el mismo
+        contenido sin validarlo, ejecutando el código JavaScript
+        directamente en el navegador.
+      </p>
 
       <div className="evidencias">
 
         <figure>
+
           <img
-            src="/img_beieti/xss1_beieti.png"
+            src="/img_beieti/xss_payload.png"
             alt="Payload XSS"
             className="evidencia"
           />
+
           <figcaption>
+
             Figura 1. Payload utilizado durante la prueba.
+
           </figcaption>
+
         </figure>
 
         <figure>
+
           <img
-            src="/img_beieti/xss2_beieti.png"
+            src="/img_beieti/xss_resultado.png"
             alt="Resultado XSS"
             className="evidencia"
           />
+
           <figcaption>
-            Figura 2. Resultado obtenido después de ejecutar el ataque.
+
+            Figura 2. Resultado obtenido al ejecutar el código JavaScript.
+
           </figcaption>
+
         </figure>
 
         <figure>
+
           <img
-            src="/img_beieti/xssCal_beieti.png"
+            src="/img_beieti/cvss_xss.png"
             alt="CVSS XSS"
             className="evidencia"
           />
+
           <figcaption>
-            Figura 3. Resultado del cálculo CVSS v3.1.
+
+            Figura 3. Resultado obtenido utilizando la calculadora oficial
+            CVSS v3.1.
+
           </figcaption>
+
         </figure>
 
       </div>
+
+      <h3>¿Por qué ocurre?</h3>
+
+      <p>
+        Esta vulnerabilidad ocurre porque la aplicación devuelve
+        directamente la información enviada por el usuario sin validarla ni
+        aplicar mecanismos de codificación (Output Encoding).
+      </p>
+
+      <p>
+        Como consecuencia, el navegador interpreta el contenido recibido
+        como código JavaScript válido y lo ejecuta automáticamente.
+      </p>
 
       <h3>Evaluación CVSS v3.1</h3>
 
@@ -66,8 +126,13 @@ function XSS() {
         </p>
 
         <p>
-          <strong>Vector:</strong><br/>
+
+          <strong>Vector</strong>
+
+          <br />
+
           CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+
         </p>
 
       </div>
@@ -75,48 +140,48 @@ function XSS() {
       <h3>¿Qué significa este puntaje?</h3>
 
       <p>
-        El resultado indica que la vulnerabilidad presenta un riesgo medio.
-        Aunque requiere que la víctima interactúe con el contenido malicioso,
-        permite ejecutar código JavaScript dentro del navegador del usuario.
+        La vulnerabilidad presenta una severidad media, ya que requiere la
+        interacción de un usuario para que el ataque tenga efecto.
       </p>
-
-      <h3>Contexto Municipalidad de Cerro Verde</h3>
 
       <p>
-        En un portal municipal esta vulnerabilidad podría utilizarse para
-        robar sesiones de usuarios, modificar el contenido de la página o
-        capturar información ingresada por ciudadanos y funcionarios.
+        En un escenario real, un atacante podría utilizar esta
+        vulnerabilidad para engañar a ciudadanos o funcionarios
+        municipales, robar información de sesión o mostrar contenido falso
+        dentro del portal municipal.
       </p>
 
-      <h3>Impacto</h3>
+      <h3>Políticas de prevención</h3>
 
       <ul>
 
-        <li>Robo de cookies de sesión.</li>
+        <li>Validar todas las entradas recibidas desde el usuario.</li>
 
-        <li>Suplantación de identidad.</li>
-
-        <li>Captura de información de formularios.</li>
-
-        <li>Modificación del contenido mostrado.</li>
-
-        <li>Pérdida de confianza en el portal municipal.</li>
-
-      </ul>
-
-      <h3>Medidas de mitigación</h3>
-
-      <ul>
-
-        <li>Validar y sanitizar las entradas del usuario.</li>
-
-        <li>Codificar correctamente la salida de datos.</li>
+        <li>Aplicar Output Encoding antes de mostrar información.</li>
 
         <li>Implementar Content Security Policy (CSP).</li>
 
-        <li>Utilizar cookies HttpOnly y Secure.</li>
+        <li>Evitar insertar directamente contenido HTML del usuario.</li>
+
+        <li>Capacitar a los desarrolladores en desarrollo seguro.</li>
+
+      </ul>
+
+      <h3>Controles de mitigación</h3>
+
+      <ul>
+
+        <li>Configurar cookies HttpOnly y Secure.</li>
+
+        <li>Implementar un Web Application Firewall (WAF).</li>
+
+        <li>Registrar y monitorear actividades sospechosas mediante logs.</li>
+
+        <li>Implementar monitoreo continuo de eventos de seguridad.</li>
 
         <li>Realizar auditorías periódicas siguiendo OWASP Top 10.</li>
+
+        <li>Aplicar controles definidos por OWASP, NIST y CIS Controls.</li>
 
       </ul>
 

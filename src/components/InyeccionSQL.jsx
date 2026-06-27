@@ -4,19 +4,51 @@ function InyeccionSQL() {
 
       <h2>SQL Injection</h2>
 
+      <h3>¿Qué es SQL Injection?</h3>
+
       <p>
-        SQL Injection es una vulnerabilidad que ocurre cuando una aplicación
-        utiliza directamente los datos ingresados por el usuario para construir
-        consultas SQL sin validar correctamente la información recibida.
+        SQL Injection es una vulnerabilidad web que ocurre cuando una
+        aplicación incorpora directamente los datos ingresados por el usuario
+        dentro de una consulta SQL sin validarlos correctamente.
       </p>
 
       <p>
-        Durante la auditoría se comprobó que era posible alterar el
-        comportamiento de la consulta SQL utilizando un payload sencillo,
-        obteniendo información que normalmente no debería ser accesible.
+        Cuando esto sucede, un atacante puede modificar la consulta original
+        mediante instrucciones SQL propias, obteniendo acceso a información
+        que normalmente no debería visualizar. Dependiendo del sistema
+        afectado, también podría modificar, eliminar o insertar registros
+        dentro de la base de datos.
       </p>
 
-      <h3>Evidencia del laboratorio</h3>
+      <p>
+        En un portal como el de la Municipalidad de Cerro Verde, una
+        vulnerabilidad de este tipo podría comprometer información de
+        ciudadanos, funcionarios municipales y registros administrativos,
+        afectando la seguridad y confiabilidad del servicio.
+      </p>
+
+      <h3>Evidencia</h3>
+
+      <p>
+        La prueba fue realizada utilizando DVWA configurado con el nivel de
+        seguridad <strong>Low</strong>.
+      </p>
+
+      <p>
+        Para comprobar la vulnerabilidad se utilizó el siguiente payload:
+      </p>
+
+      <pre>
+        <code>
+1' OR '1'='1
+        </code>
+      </pre>
+
+      <p>
+        Al ejecutar la consulta, la aplicación devolvió todos los registros
+        almacenados en la base de datos en lugar de mostrar únicamente el
+        usuario solicitado.
+      </p>
 
       <div className="evidencias">
 
@@ -31,8 +63,8 @@ function InyeccionSQL() {
           <figcaption>
 
             Figura 1. Ejecución exitosa de SQL Injection utilizando el payload
-            <strong> 1' OR '1'='1</strong>. Como resultado, la aplicación
-            devolvió todos los registros almacenados en la base de datos.
+            <strong> 1' OR '1'='1</strong>. La aplicación devolvió todos los
+            registros almacenados en la base de datos.
 
           </figcaption>
 
@@ -48,7 +80,7 @@ function InyeccionSQL() {
 
           <figcaption>
 
-            Figura 2. Resultado obtenido mediante la calculadora oficial
+            Figura 2. Resultado obtenido utilizando la calculadora oficial
             CVSS v3.1.
 
           </figcaption>
@@ -57,13 +89,19 @@ function InyeccionSQL() {
 
       </div>
 
-      <h3>Resultado obtenido</h3>
+      <h3>¿Por qué ocurre?</h3>
 
       <p>
-        Se utilizó el payload <strong>1' OR '1'='1</strong>, logrando que la
-        aplicación devolviera todos los registros de la base de datos. Esto
-        confirmó que la entrada del usuario era interpretada directamente dentro
-        de la consulta SQL, permitiendo modificar su funcionamiento.
+        Esta vulnerabilidad ocurre porque la aplicación utiliza directamente
+        la información ingresada por el usuario para construir la consulta
+        SQL, sin validar ni separar correctamente los datos del código de la
+        consulta.
+      </p>
+
+      <p>
+        Debido a esto, el motor de base de datos interpreta el payload
+        enviado como si fuera parte de la instrucción SQL original,
+        permitiendo alterar completamente la lógica de la consulta.
       </p>
 
       <h3>Evaluación CVSS v3.1</h3>
@@ -77,8 +115,13 @@ function InyeccionSQL() {
         </p>
 
         <p>
-          <strong>Vector:</strong><br />
+
+          <strong>Vector</strong>
+
+          <br />
+
           CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N
+
         </p>
 
       </div>
@@ -86,51 +129,51 @@ function InyeccionSQL() {
       <h3>¿Qué significa este puntaje?</h3>
 
       <p>
-        El puntaje obtenido indica que la vulnerabilidad representa un riesgo
-        alto para la aplicación. Puede ser explotada de forma remota y permite
-        acceder a información sensible sin requerir técnicas complejas.
+        El resultado obtenido corresponde a una vulnerabilidad de severidad
+        alta, ya que puede explotarse de forma remota, requiere poca
+        complejidad técnica y no necesita la participación de otros usuarios.
       </p>
-
-      <h3>Contexto Municipalidad de Cerro Verde</h3>
 
       <p>
-        Si esta vulnerabilidad estuviera presente en el portal municipal,
-        un atacante podría acceder a información personal de ciudadanos,
-        antecedentes de funcionarios o registros administrativos, afectando
-        principalmente la confidencialidad de la información.
+        Si una vulnerabilidad como esta existiera en el portal de la
+        Municipalidad de Cerro Verde, un atacante podría acceder a
+        información personal de ciudadanos, antecedentes de funcionarios
+        municipales y distintos registros administrativos.
       </p>
 
-      <h3>Impacto</h3>
+      <h3>Políticas de prevención</h3>
 
       <ul>
 
-        <li>Acceso no autorizado a datos personales.</li>
+        <li>Utilizar consultas parametrizadas (Prepared Statements).</li>
 
-        <li>Exposición de información de funcionarios.</li>
+        <li>Validar todos los datos recibidos por la aplicación.</li>
 
-        <li>Posible modificación de registros municipales.</li>
+        <li>Sanitizar la información ingresada por los usuarios.</li>
 
-        <li>Pérdida de confianza en los servicios digitales.</li>
+        <li>Evitar construir consultas SQL mediante concatenación de texto.</li>
 
-        <li>Riesgo de incumplimiento de buenas prácticas de seguridad.</li>
+        <li>Realizar revisiones de código durante el desarrollo.</li>
+
+        <li>Capacitar a los desarrolladores en programación segura.</li>
 
       </ul>
 
-      <h3>Medidas de mitigación</h3>
+      <h3>Controles de mitigación</h3>
 
       <ul>
 
-        <li>Implementar consultas parametrizadas (Prepared Statements).</li>
-
-        <li>Validar y sanitizar todas las entradas del usuario.</li>
-
-        <li>Aplicar el principio de mínimo privilegio.</li>
-
         <li>Implementar un Web Application Firewall (WAF).</li>
 
-        <li>Monitorear intentos de acceso sospechosos.</li>
+        <li>Registrar y monitorear intentos de acceso mediante logs.</li>
 
-        <li>Realizar auditorías periódicas basadas en OWASP Top 10.</li>
+        <li>Aplicar el principio de mínimo privilegio en la base de datos.</li>
+
+        <li>Implementar monitoreo continuo y generación de alertas.</li>
+
+        <li>Realizar auditorías periódicas utilizando OWASP Top 10.</li>
+
+        <li>Aplicar controles recomendados por OWASP, NIST y CIS Controls.</li>
 
       </ul>
 

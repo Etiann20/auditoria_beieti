@@ -8,7 +8,7 @@ Como institucion publica, la municipalidad administra informacion de ciudadanos,
 
 -----------------------------------------------------------------------
 
-## **Portal de Clientes
+## **Portal de Clientes**
 
 La Municipalidad de Cerro Verde tiene un portal web dedicado a facilitar la obtencion y realizacion de tramites y consutlas en linea. Tambien, en el sitio web los ciudadaos pueden acceder a servicios digitales como alguna consulta de informaicon municipal, solicitudes de permisos y certificados, seguimiento de tramites en proceso, contactar con diferentes unidades dentro de la municipalidad. 
 
@@ -16,4 +16,4 @@ Teniendo en cuenta la informacion sensible que procesa este portal, es necesario
 
 ## **Objetivo Auditoria**
 
-La idea de esta auditoria es identificar las vulnerabilidades presentes en una aplicacion web laboratorio, analizar el impacto que estas vulnerabilidades pueden tenere sobre el sitio web la Municipalidad de Cerro Verde y luego de esto proponer medidas de prevencion para reducir los riesgos de seguridad en la mayor forma posible. 
+La idea de esta auditoria es identificar las vulnerabilidades presentes en una aplicacion web laboratorio (DVWA), analizar el impacto que estas vulnerabilidades pueden tenere sobre el sitio web la Municipalidad de Cerro Verde y luego de esto proponer medidas de prevencion para reducir los riesgos de seguridad en la mayor forma posible. 
