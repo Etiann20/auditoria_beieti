@@ -1,102 +1,85 @@
-# SQL Injection (Inyección SQL)
+# SQL Injection
 
-## Descripción
+## Descripción de la vulnerabilidad
 
-La vulnerabilidad **SQL Injection (SQLi)** permite que un atacante manipule las consultas SQL que una aplicación envía a la base de datos. Esto ocurre cuando la aplicación incorpora directamente los datos ingresados por el usuario dentro de una consulta SQL sin realizar una validación o sanitización adecuada.
+SQL Injection es una vulnerabilidad que ocurre cuando una aplicación utiliza directamente los datos ingresados por el usuario para construir consultas SQL, sin validar correctamente la información recibida.
 
-Como consecuencia, un atacante puede acceder, modificar o eliminar información almacenada en la base de datos, dependiendo de los permisos del sistema.
+Si un atacante logra aprovechar este problema, puede modificar la consulta original y acceder a información que normalmente no debería estar disponible. Dependiendo del sistema afectado, también podría modificar o eliminar registros almacenados en la base de datos.
+
+En un portal como el de la Municipalidad de Cerro Verde, una vulnerabilidad de este tipo podría comprometer información de ciudadanos, funcionarios, solicitudes municipales y otros registros importantes para el funcionamiento de la institución.
 
 ---
 
-## Evidencia
+# Evidencia de la vulnerabilidad
 
-**Aplicación utilizada:** DVWA (Damn Vulnerable Web Application)
-
-**Nivel de seguridad:** Low
-
-**Payload utilizado:**
+Durante la auditoría realizada en DVWA, configurado con el nivel de seguridad **Low**, se utilizó el siguiente payload:
 
 ```sql
-' OR '1'='1
+1' OR '1'='1
 ```
 
-**Resultado obtenido:**
+Con este payload la aplicación respondió mostrando todos los usuarios almacenados en la base de datos, en lugar de entregar solamente el registro solicitado.
 
-> *Pendiente de agregar captura de pantalla una vez realizado el laboratorio.*
+Esto demuestra que la aplicación interpreta directamente la entrada del usuario dentro de la consulta SQL, permitiendo alterar su funcionamiento mediante una condición siempre verdadera.
 
-**Captura:**
+## Evidencia obtenida
+
+### Evidencia de explotación
 
 ![SQL Injection](img_beieti/sqli_beieti.png)
 
+*Figura 1. Ejecución exitosa de SQL Injection utilizando el payload `1' OR '1'='1'. Como resultado, la aplicación devolvió todos los registros almacenados en la base de datos, confirmando la existencia de la vulnerabilidad.*
+
 ---
 
-## ¿Por qué funciona?
+### Cálculo CVSS v3.1
 
-La vulnerabilidad funciona porque la aplicación concatena directamente la información ingresada por el usuario dentro de una consulta SQL.
+![CVSS SQL Injection](img_beieti/sqliCal_beieti.png)
 
-Por ejemplo, una consulta vulnerable podría construirse de la siguiente forma:
+*Figura 2. Resultado obtenido mediante la calculadora oficial CVSS v3.1 utilizada para determinar la gravedad de la vulnerabilidad.*
 
-```sql
-SELECT * FROM users WHERE id = '$id';
+### Vector CVSS
+
+```text
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N
 ```
 
-Si el usuario ingresa:
+## ¿Qué significa este puntaje?
 
-```sql
-' OR '1'='1
-```
+El puntaje obtenido corresponde a una vulnerabilidad de severidad **Alta**.
 
-La consulta queda:
+Esto significa que la vulnerabilidad puede ser explotada de forma remota, con poca dificultad técnica y sin necesidad de que otro usuario participe en el ataque.
 
-```sql
-SELECT * FROM users WHERE id = '' OR '1'='1';
-```
+Durante la prueba realizada fue posible acceder a información almacenada en la base de datos, afectando principalmente la confidencialidad de los datos.
 
-La condición `'1'='1'` siempre es verdadera, por lo que la base de datos devuelve todos los registros en lugar de únicamente el solicitado.
+## Aplicación al caso de la Municipalidad de Cerro Verde
 
-Este tipo de ataque permite omitir validaciones y obtener acceso a información que normalmente debería estar protegida.
+Si una vulnerabilidad como esta existiera en el portal municipal, un atacante podría obtener acceso a información personal de ciudadanos, antecedentes de funcionarios o registros administrativos.
+
+Aunque durante la prueba solamente se demostró la lectura de información, en un sistema real este tipo de vulnerabilidad también podría utilizarse para modificar o eliminar registros importantes, generando problemas operacionales y pérdida de confianza por parte de los usuarios del sistema.
 
 ---
 
-## Impacto para la Municipalidad de Cerro Verde
+# Impacto
 
-Si esta vulnerabilidad existiera en el portal de la Municipalidad de Cerro Verde, un atacante podría acceder a información sensible como:
+Los principales riesgos para la Municipalidad de Cerro Verde serían:
 
-- Datos personales de los ciudadanos.
-- Información de funcionarios municipales.
-- Patentes comerciales.
-- Permisos municipales.
-- Registros de pagos.
-- Información administrativa.
-
-La exposición de estos datos podría afectar la privacidad de los ciudadanos, generar pérdida de confianza en la institución y provocar incumplimientos en materia de protección de datos.
+- Acceso no autorizado a información personal de ciudadanos.
+- Exposición de datos de funcionarios municipales.
+- Alteración de registros administrativos.
+- Incumplimiento de buenas prácticas de seguridad.
+- Pérdida de confianza en los servicios digitales municipales.
 
 ---
 
-## Evaluación CVSS
+# Medidas de mitigación
 
-**Versión:** CVSS v3.1
-
-**Puntaje estimado:** **9.1 / 10**
-
-**Severidad:** Crítica
-
-**Justificación:**
-
-- Exposición de información confidencial.
-- Posibilidad de modificar registros.
-- Alto impacto sobre la confidencialidad e integridad.
-- Fácil explotación cuando no existen controles de validación.
-
----
-
-## Defensa
-
-Para prevenir este tipo de vulnerabilidad se recomienda:
+Para disminuir el riesgo asociado a esta vulnerabilidad se recomienda:
 
 - Utilizar consultas parametrizadas (Prepared Statements).
-- Validar todas las entradas del usuario.
-- Implementar procedimientos almacenados cuando corresponda.
-- Aplicar el principio de mínimo privilegio en la base de datos.
+- Validar y sanitizar todas las entradas del usuario.
+- Aplicar el principio de mínimo privilegio en las cuentas de base de datos.
+- Implementar un Web Application Firewall (WAF).
 - Registrar y monitorear intentos de acceso sospechosos.
-- Realizar pruebas periódicas de seguridad sobre las aplicaciones web.
+- Realizar auditorías periódicas siguiendo las recomendaciones de OWASP Top 10.
+- Mantener actualizados los componentes de la aplicación y el servidor.

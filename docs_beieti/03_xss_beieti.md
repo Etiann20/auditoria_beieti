@@ -1,84 +1,88 @@
-# Cross Site Scripting (XSS)
+# Cross Site Scripting (Reflected XSS)
 
-## Descripción
+## Descripción de la vulnerabilidad
 
-La vulnerabilidad **Cross Site Scripting (XSS)** permite a un atacante inyectar código JavaScript malicioso dentro de una página web. Cuando otro usuario accede a esa página, el navegador ejecuta dicho código como si fuera parte legítima del sitio web.
+Cross Site Scripting (XSS) es una vulnerabilidad que permite ejecutar código JavaScript dentro del navegador de otro usuario cuando la aplicación no valida correctamente la información que recibe.
 
-En esta auditoría se analizará la variante **Reflected XSS**, donde el código malicioso es enviado mediante una solicitud y reflejado inmediatamente por la aplicación.
+En este caso se trabajó con la variante **Reflected XSS**, donde el código malicioso no queda almacenado en el servidor, sino que es enviado mediante una petición y ejecutado cuando la víctima accede a la página.
+
+Si un atacante logra explotar esta vulnerabilidad, podría robar cookies de sesión, modificar el contenido mostrado en la página o engañar al usuario para obtener información personal.
 
 ---
 
-## Evidencia
+# Evidencia de la vulnerabilidad
 
-**Aplicación utilizada:** DVWA (Damn Vulnerable Web Application)
-
-**Nivel de seguridad:** Low
-
-**Payload utilizado:**
+Durante la auditoría realizada en DVWA, configurado con el nivel de seguridad **Low**, se utilizó el siguiente payload:
 
 ```html
 <script>alert('XSS')</script>
 ```
 
-**Resultado obtenido:**
+Después de enviar el formulario, el navegador ejecutó correctamente el código JavaScript, mostrando una ventana emergente (alert).
 
-> *Pendiente de agregar captura de pantalla una vez realizado el laboratorio.*
+Con esta prueba se comprobó que la aplicación no valida correctamente la entrada del usuario antes de mostrarla nuevamente en la página.
 
-**Captura:**
+## Evidencia obtenida
 
-![Cross Site Scripting](img_beieti/xss_beieti.png)
+**Figura 1. Payload utilizado durante la prueba.**
 
----
+![Payload XSS](img_beieti/xss1_beieti.png)
 
-## ¿Por qué funciona?
+**Figura 2. Resultado obtenido después de ejecutar el ataque.**
 
-La vulnerabilidad ocurre porque la aplicación devuelve al navegador la información ingresada por el usuario sin validarla ni sanitizarla.
+![Resultado XSS](img_beieti/xss2_beieti.png)
 
-Cuando el navegador recibe una etiqueta `<script>`, la interpreta como código JavaScript válido y la ejecuta automáticamente.
+**Figura 3. Resultado obtenido en la calculadora CVSS v3.1.**
 
-En este caso, el payload utilizado genera una ventana emergente (`alert`), demostrando que es posible ejecutar código arbitrario dentro del navegador de la víctima.
-
-En un escenario real, un atacante podría utilizar esta vulnerabilidad para robar cookies de sesión, capturar credenciales, modificar el contenido de la página o redirigir a los usuarios hacia sitios fraudulentos.
+![CVSS XSS](img_beieti/xssCal.png)
 
 ---
 
-## Impacto para la Municipalidad de Cerro Verde
+# Evaluación CVSS v3.1
 
-Si esta vulnerabilidad estuviera presente en el portal municipal, un atacante podría:
+**Puntaje obtenido:** **6.1 / 10 (Media)**
 
-- Robar sesiones de ciudadanos o funcionarios.
-- Suplantar la identidad de usuarios autenticados.
-- Modificar el contenido mostrado en el portal.
-- Redirigir a los usuarios hacia sitios maliciosos.
-- Capturar información ingresada en formularios municipales.
+### Vector CVSS
 
-Estas acciones podrían afectar la confianza de la ciudadanía y comprometer la seguridad de los servicios digitales ofrecidos por la municipalidad.
+```text
+CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+```
 
----
+## ¿Qué significa este puntaje?
 
-## Evaluación CVSS
+El puntaje obtenido corresponde a una vulnerabilidad de severidad **Media**.
 
-**Versión:** CVSS v3.1
+Aunque la explotación requiere que un usuario interactúe con el contenido generado por el atacante, sigue representando un riesgo importante, ya que permite ejecutar código JavaScript dentro del navegador de la víctima.
 
-**Puntaje estimado:** **6.1 / 10**
+Durante la prueba realizada se logró ejecutar un script simple utilizando la función `alert()`, comprobando que la aplicación era vulnerable a Reflected XSS.
 
-**Severidad:** Media
+## Aplicación al caso de la Municipalidad de Cerro Verde
 
-**Justificación:**
+Si esta vulnerabilidad existiera en el portal municipal, un atacante podría crear enlaces maliciosos para engañar a funcionarios o ciudadanos y ejecutar código JavaScript dentro de su navegador.
 
-- Permite la ejecución de código JavaScript en el navegador de la víctima.
-- Puede facilitar el robo de sesiones y credenciales.
-- Requiere la interacción del usuario para que el ataque tenga éxito.
-- El impacto depende de los privilegios de la víctima.
+Esto podría utilizarse para robar cookies de sesión, capturar información ingresada en formularios o modificar el contenido mostrado al usuario, afectando principalmente la confidencialidad e integridad de la información.
 
 ---
 
-## Defensa
+# Impacto
 
-Para prevenir ataques XSS se recomienda:
+Los principales riesgos para la Municipalidad de Cerro Verde serían:
 
-- Validar y sanitizar todas las entradas de los usuarios.
-- Escapar correctamente los caracteres especiales antes de mostrar información en el navegador.
-- Implementar políticas de seguridad como **Content Security Policy (CSP)**.
-- Utilizar cookies con los atributos **HttpOnly** y **Secure**.
-- Realizar pruebas de seguridad periódicas sobre las aplicaciones web.
+- Robo de cookies de sesión.
+- Suplantación de identidad de usuarios autenticados.
+- Modificación del contenido mostrado en el portal.
+- Captura de información ingresada por ciudadanos.
+- Pérdida de confianza en los servicios digitales municipales.
+
+---
+
+# Medidas de mitigación
+
+Para disminuir el riesgo asociado a esta vulnerabilidad se recomienda:
+
+- Validar y sanitizar toda la información ingresada por los usuarios.
+- Codificar correctamente la salida antes de mostrarla en pantalla.
+- Implementar Content Security Policy (CSP).
+- Utilizar cookies con atributos HttpOnly y Secure.
+- Mantener actualizados los frameworks utilizados por la aplicación.
+- Realizar pruebas periódicas siguiendo las recomendaciones de OWASP Top 10.

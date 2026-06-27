@@ -1,103 +1,84 @@
-# Command Injection (Inyección de Comandos)
+# Command Injection
 
-## Descripción
+## Descripción de la vulnerabilidad
 
-La vulnerabilidad **Command Injection** permite que un atacante ejecute comandos del sistema operativo a través de una aplicación web. Esto ocurre cuando la aplicación utiliza datos proporcionados por el usuario para construir comandos del sistema sin realizar una validación adecuada.
+Command Injection es una vulnerabilidad que ocurre cuando una aplicación ejecuta comandos del sistema operativo utilizando datos ingresados por el usuario sin realizar una validación adecuada.
 
-Si un atacante logra explotar esta vulnerabilidad, puede obtener acceso a información del servidor, modificar archivos, ejecutar programas o incluso tomar el control del sistema comprometido, dependiendo de los privilegios con los que se ejecute la aplicación.
+Si un atacante logra aprovechar este problema, puede ejecutar comandos directamente sobre el servidor donde se encuentra la aplicación, obteniendo acceso a archivos, información sensible o incluso comprometiendo completamente el sistema.
+
+En un portal como el de la Municipalidad de Cerro Verde, una vulnerabilidad de este tipo representa uno de los riesgos más críticos, ya que podría afectar tanto la información almacenada como la continuidad de los servicios entregados a los ciudadanos.
 
 ---
 
-## Evidencia
+# Evidencia de la vulnerabilidad
 
-**Aplicación utilizada:** DVWA (Damn Vulnerable Web Application)
-
-**Nivel de seguridad:** Low
-
-**Payload utilizado:**
+Durante la auditoría realizada en DVWA, con el nivel de seguridad configurado en **Low**, se utilizó el siguiente payload:
 
 ```bash
 127.0.0.1; cat /etc/passwd
 ```
 
-**Resultado obtenido:**
+Al ejecutar la prueba, la aplicación realizó el ping normalmente y posteriormente ejecutó el comando **cat /etc/passwd**, mostrando el contenido del archivo directamente en la página.
 
-> *Pendiente de agregar captura de pantalla una vez realizado el laboratorio.*
+Con esto se comprobó que la aplicación estaba ejecutando comandos enviados por el usuario sin validar correctamente la entrada recibida.
 
-**Captura:**
+## Evidencia obtenida
+
+### Evidencia de explotación
 
 ![Command Injection](img_beieti/comandos_beieti.png)
 
+*Figura 1. Ejecución exitosa de Command Injection utilizando el payload `127.0.0.1; cat /etc/passwd`. Como resultado fue posible acceder al contenido del archivo `/etc/passwd`, demostrando que la aplicación ejecuta comandos enviados por el usuario.*
+
 ---
 
-## ¿Por qué funciona?
+### Cálculo CVSS v3.1
 
-La vulnerabilidad ocurre porque la aplicación incorpora directamente la entrada del usuario dentro de un comando del sistema operativo.
+![CVSS Command Injection](img_beieti/comandosCal_beieti.png)
 
-En este caso, el carácter `;` permite finalizar el comando original y ejecutar un segundo comando.
+*Figura 2. Resultado obtenido mediante la calculadora oficial CVSS v3.1 utilizada para determinar la gravedad de la vulnerabilidad.*
 
-Por ejemplo, si la aplicación ejecuta:
+### Vector CVSS
 
-```bash
-ping 127.0.0.1
+```text
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
 ```
 
-y el usuario ingresa:
+## ¿Qué significa este puntaje?
 
-```bash
-127.0.0.1; cat /etc/passwd
-```
+El resultado corresponde a una vulnerabilidad de severidad **Crítica**, lo que indica que puede comprometer completamente el sistema afectado.
 
-el sistema interpreta ambos comandos y ejecuta:
+Durante la prueba fue posible ejecutar comandos directamente sobre el servidor y acceder al contenido del archivo `/etc/passwd`, demostrando que un atacante podría ejecutar instrucciones del sistema operativo sin restricciones.
 
-```bash
-ping 127.0.0.1
-cat /etc/passwd
-```
+## Aplicación al caso de la Municipalidad de Cerro Verde
 
-Como resultado, además de realizar el comando esperado, también muestra el contenido del archivo `/etc/passwd`, demostrando que es posible ejecutar comandos arbitrarios en el servidor.
+Si esta vulnerabilidad existiera en el portal de la Municipalidad de Cerro Verde, un atacante podría acceder a archivos internos del servidor, modificar información crítica, instalar software malicioso o incluso dejar fuera de funcionamiento los servicios digitales utilizados por la comunidad.
+
+Debido al nivel de acceso que puede obtenerse, esta vulnerabilidad representa uno de los mayores riesgos para la infraestructura tecnológica de la municipalidad.
 
 ---
 
-## Impacto para la Municipalidad de Cerro Verde
+# Impacto
 
-Si esta vulnerabilidad existiera en el portal de la Municipalidad de Cerro Verde, un atacante podría:
+Los principales riesgos para la Municipalidad de Cerro Verde serían:
 
-- Obtener información del sistema operativo.
-- Acceder a archivos internos del servidor.
-- Modificar o eliminar información crítica.
-- Interrumpir los servicios digitales municipales.
-- Instalar software malicioso.
-- Comprometer la infraestructura tecnológica de la municipalidad.
-
-Este tipo de vulnerabilidad representa un riesgo crítico debido a que puede afectar tanto la disponibilidad como la confidencialidad e integridad de la información institucional.
+- Acceso no autorizado a archivos del servidor.
+- Robo de información confidencial.
+- Modificación o eliminación de archivos importantes.
+- Instalación de malware o puertas traseras.
+- Interrupción de los servicios digitales municipales.
+- Compromiso total del servidor donde se aloja la aplicación.
 
 ---
 
-## Evaluación CVSS
+# Medidas de mitigación
 
-**Versión:** CVSS v3.1
+Para reducir el riesgo asociado a esta vulnerabilidad se recomienda:
 
-**Puntaje estimado:** **9.8 / 10**
-
-**Severidad:** Crítica
-
-**Justificación:**
-
-- Permite la ejecución de comandos directamente en el servidor.
-- Puede comprometer completamente el sistema.
-- Afecta la confidencialidad, integridad y disponibilidad de la información.
-- Su explotación puede derivar en el control total del servidor si no existen mecanismos de protección.
-
----
-
-## Defensa
-
-Para prevenir ataques de Command Injection se recomienda:
-
-- Evitar ejecutar comandos del sistema operativo utilizando entradas proporcionadas por los usuarios.
-- Validar estrictamente todos los datos recibidos.
-- Utilizar listas blancas (whitelists) para aceptar únicamente valores permitidos.
-- Ejecutar la aplicación con el principio de mínimo privilegio.
-- Implementar monitoreo y registro de actividades sospechosas.
-- Mantener actualizados los sistemas y realizar auditorías de seguridad periódicas.
+- Evitar ejecutar comandos del sistema utilizando datos ingresados por el usuario.
+- Validar estrictamente todas las entradas mediante listas blancas (Whitelist).
+- Ejecutar la aplicación con el menor nivel de privilegios posible.
+- Implementar mecanismos de aislamiento entre la aplicación y el sistema operativo.
+- Registrar y monitorear intentos de ejecución de comandos sospechosos.
+- Realizar auditorías periódicas siguiendo las recomendaciones de OWASP Top 10.
+- Mantener actualizados el sistema operativo y los componentes del servidor.
