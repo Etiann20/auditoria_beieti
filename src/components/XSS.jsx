@@ -54,7 +54,7 @@ function XSS() {
         <figure>
 
           <img
-            src="/img_beieti/xss_payload.png"
+            src="/img_beieti/xss1_beieti.png"
             alt="Payload XSS"
             className="evidencia"
           />
@@ -70,7 +70,7 @@ function XSS() {
         <figure>
 
           <img
-            src="/img_beieti/xss_resultado.png"
+            src="/img_beieti/xss2_beieti.png"
             alt="Resultado XSS"
             className="evidencia"
           />
@@ -86,7 +86,7 @@ function XSS() {
         <figure>
 
           <img
-            src="/img_beieti/cvss_xss.png"
+            src="/img_beieti/xssCal_beieti.png"
             alt="CVSS XSS"
             className="evidencia"
           />

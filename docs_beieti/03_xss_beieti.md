@@ -28,7 +28,7 @@ Como resultado apareció una ventana emergente (alert), confirmando que el naveg
 
 ### Payload utilizado
 
-![Payload XSS](img_beieti/xss_payload.png)
+![Payload XSS](img_beieti/xss1_beieti.png)
 
 *Figura 1. Payload utilizado durante la prueba para comprobar la vulnerabilidad Reflected XSS.*
 
@@ -36,7 +36,7 @@ Como resultado apareció una ventana emergente (alert), confirmando que el naveg
 
 ### Resultado obtenido
 
-![Resultado XSS](img_beieti/xss_resultado.png)
+![Resultado XSS](img_beieti/xss2_beieti.png)
 
 *Figura 2. El navegador ejecutó correctamente el código JavaScript enviado mediante el payload, confirmando la existencia de la vulnerabilidad.*
 
@@ -44,7 +44,7 @@ Como resultado apareció una ventana emergente (alert), confirmando que el naveg
 
 ### Cálculo CVSS v3.1
 
-![CVSS XSS](img_beieti/cvss_xss.png)
+![CVSS XSS](img_beieti/xssCal_beieti.png)
 
 *Figura 3. Resultado obtenido utilizando la calculadora oficial CVSS v3.1 para determinar la severidad de la vulnerabilidad.*
 

@@ -19,13 +19,13 @@ import {
   FaUniversity,
   FaCalendarAlt,
   FaShieldAlt,
-  FaArrowDown
+  FaArrowDown,
 } from "react-icons/fa";
 
 function App() {
 
   const irAuditoria = () => {
-    document.getElementById("resumen").scrollIntoView({
+    document.getElementById("dashboard").scrollIntoView({
       behavior: "smooth",
     });
   };
@@ -33,13 +33,10 @@ function App() {
   return (
     <>
 
-      {/* Barra superior */}
       <Navbar />
 
-      {/* Barra de progreso */}
       <div className="progress"></div>
 
-      {/* Landing */}
       <header className="landing">
 
         <div className="landing-left">
@@ -65,28 +62,78 @@ function App() {
             Ver Auditoría
           </button>
 
+          <div className="landing-stats">
+
+            <div>
+
+              <strong>3</strong>
+
+              <span>Vulnerabilidades Analizadas</span>
+
+            </div>
+
+            <div>
+
+              <strong>4</strong>
+
+              <span>Activos Identificados</span>
+
+            </div>
+
+            <div>
+
+              <strong>10.0</strong>
+
+              <span>CVSS Máximo</span>
+
+            </div>
+
+            <div>
+
+              <strong>Alto</strong>
+
+              <span>Riesgo General</span>
+
+            </div>
+
+          </div>
+
         </div>
+
+        {/* ESTE </div> ES EL QUE TE FALTABA */}
 
         <div className="landing-right">
 
           <div className="info-card">
 
             <div>
+
               <FaUserGraduate />
+
               <h3>Alumno</h3>
+
               <p>Etiann Beiza</p>
+
             </div>
 
             <div>
+
               <FaUniversity />
+
               <h3>Institución</h3>
+
               <p>INACAP</p>
+
             </div>
 
             <div>
+
               <FaCalendarAlt />
+
               <h3>Año</h3>
+
               <p>2026</p>
+
             </div>
 
           </div>
@@ -95,47 +142,44 @@ function App() {
 
       </header>
 
-      {/* Dashboard */}
-      <Dashboard />
-
-      {/* Timeline */}
-      {/* <Timeline /> */}
-
-      {/* Contenido */}
       <main className="contenedor">
 
-      <Resumen />
+        <Dashboard />
 
-<Activos />
+        <Timeline />
 
-<Matriz />
+        <Resumen />
 
-<InyeccionSQL />
+        <InyeccionSQL />
 
-<XSS />
+        <XSS />
 
-<Comandos />
+        <Comandos />
 
-<Controles />
+        <Activos />
 
-<Recuperacion />
+        <Matriz />
 
+        <Controles />
 
-<Prompts />
+        <Recuperacion />
+
+        <Prompts />
 
       </main>
 
-      {/* Botón subir */}
       <BackToTop />
 
-      {/* Footer */}
       <footer>
 
         <h3>Auditoría de Seguridad Web</h3>
 
         <p>Municipalidad de Cerro Verde</p>
 
-        <p>Fundamentos de Seguridad de la Información</p>
+        <p>
+          Proyecto desarrollado para la asignatura
+          Fundamentos de Seguridad de la Información.
+        </p>
 
         <p>Etiann Beiza · INACAP · 2026</p>
 
